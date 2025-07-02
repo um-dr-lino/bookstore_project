@@ -1,16 +1,28 @@
+using System;
+using System.Collections.Generic;
+
 namespace BookVerse
 {
     public class ClubeLeitura
     {
         public int Id { get; set; }
-        public string Tema { get; set; }
-        public int ModeradorId { get; set; } 
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public int ModeradorId { get; set; }
 
-        public ClubeLeitura(int id, string tema, int moderadorId)
+        public ClubeLeitura(string nome, string descricao, int moderadorId)
         {
-            Id = id;
-            Tema = tema;
+            Nome = nome;
+            Descricao = descricao;
             ModeradorId = moderadorId;
+            DataCriacao = DateTime.Now;
+        }
+        
+        public ClubeLeitura(string nome, string descricao)
+        {
+            Nome = nome;
+            Descricao = descricao;
         }
     }
 }
