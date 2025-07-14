@@ -3,3 +3,5 @@
 ConsoleApp1.csproj
 /.vscode
 projeto_manseira.sln
+*.mp4
+.fake

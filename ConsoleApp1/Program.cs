@@ -35,73 +35,114 @@
                 manager.CadastrarLivro(livro.Titulo, livro.Isbn, livro.AnoPublicacao, livro.AutorId, livro.GeneroId);
             }
 
-            // Criar clubes
             var clubes = MinhasCriacoes.CriarClubes();
             foreach (var clube in clubes)
             {
                 manager.CriarClube(clube.Nome, clube.Descricao);
             }
 
-            var opcoesMenu = new List<string>
+            var opceosMenuPrincipal = new List<string>
             {
-                // Create
-                "1. Cadastrar Leitor",
-                "2. Cadastrar Livro",
-                "3. Cadastrar Clube de Leitura",
-                "4. Criar Encontro",
-                // Read
-                "5. Listar Leitores",
-                "6. Listar Livros",
-                "7. Listar Clubes",
-                "8. Listar Encontros",
-                // Update
-                "9. Editar Leitor",
-                "10. Editar Livro",
-                "11. Editar Clube",
-                // Delete
-                "12. Excluir Leitor",
-                "13. Excluir Livro",
-                "14. Excluir Clube",
-                "15. Excluir Encontro",
-
-                "0. Sair"
+                "1. Cadastrar",
+                "2. Listar",
+                "3. Editar",
+                "4. Excluir",
+                "5. Voltar"
             };
 
             while (true)
             {
-                tela.prepararTela("BookVerse – Clube de Leitura Online");
-                string opcao = tela.mostrarMenu(opcoesMenu, 5, 4);
+                tela.prepararTela("BookVerse – Clube de Leitura da Edicarsia Pillon");
+                string opcaoPrincipal = tela.mostrarMenu(opceosMenuPrincipal, 5, 4);
+
+                if (opcaoPrincipal == "5") return;
 
                 tela.limparArea(2, 3, 78, 22);
 
-                switch (opcao)
+                switch (opcaoPrincipal)
                 {
-                    case "1": CadastrarLeitorUI(manager, tela); break;
-                    case "2": CadastrarLivroUI(manager, tela); break;
-                    case "3": CriarClubeUI(manager, tela); break;
-                    // case "4": InscreverLeitorEmClubeUI(manager, tela); break;
-                    case "4": criarEncontroUI(manager, tela); break;
-                    // case "5": RegistrarLeituraUI(manager, tela); break;
-                    // case "6": VerRankingLeitoresUI(manager, tela); break;
-                    case "5": ListarLeitoresUI(manager, tela); break;
-                    case "6": ListarLivros(manager, tela); break;
-                    case "7": ListarClubesUI(manager, tela); break;
-                    case "8": ListarEncontrosUI(manager, tela); break;
-                    case "9": EditarLeitorUI(manager, tela); break;
-                    case "10": EditarLivroUI(manager, tela); break;
-                    case "11": EditarClubeUI(manager, tela); break;
-                    case "12": DeletarLeitor(manager, tela); break;
-                    case "13": DeletarLivro(manager, tela); break;
-                    case "14": DeletarClube(manager, tela); break;
-                    case "15": DeletarEncontro(manager, tela); break;
-                    case "0": return;
-                    default:
-                        tela.centralizar("Opção inválida!");
+                    case "1": // Menu Cadastrar
+                        string opcaoCadastro = tela.mostrarMenu(new List<string>
+                        {
+                            "1. Leitor",
+                            "2. Livro",
+                            "3. Clube",
+                            "4. Encontro",
+                            "5. Voltar"
+                        }, 5, 4);
+
+                        switch (opcaoCadastro)
+                        {
+                            case "1": CadastrarLeitorUI(manager, tela); break;
+                            case "2": CadastrarLivroUI(manager, tela); break;
+                            case "3": CriarClubeUI(manager, tela); break;
+                            case "4": criarEncontroUI(manager, tela); break;
+                        }
+                        break;
+
+                    case "2": // Menu Listar
+                        string opcaoListar = tela.mostrarMenu(new List<string>
+                        {
+                            "1. Leitores",
+                            "2. Livros",
+                            "3. Clubes",
+                            "4. Encontros",
+                            "5. Voltar"
+                        }, 5, 4);
+
+                        switch (opcaoListar)
+                        {
+                            case "1": ListarLeitoresUI(manager, tela, true); break;
+                            case "2": ListarLivros(manager, tela); break;
+                            case "3": ListarClubesUI(manager, tela); break;
+                            case "4": ListarEncontrosUI(manager, tela); break;
+                        }
+                        break;
+
+                    case "3": // Menu Editar
+                        string opcaoEditar = tela.mostrarMenu(new List<string>
+                        {
+                            "1. Leitor",
+                            "2. Livro",
+                            "3. Clube",
+                            "4. Encontro",
+                            "5. Voltar"
+                        }, 5, 4);
+
+                        switch (opcaoEditar)
+                        {
+                            case "1": EditarLeitorUI(manager, tela); break;
+                            case "2": EditarLivroUI(manager, tela); break;
+                            case "3": EditarClubeUI(manager, tela); break;
+                        }
+                        break;
+
+                    case "4": // Menu Excluir
+                        string opcaoExcluir = tela.mostrarMenu(new List<string>
+                        {
+                            "1. Leitor",
+                            "2. Livro",
+                            "3. Clube",
+                            "4. Encontro",
+                            "5. Voltar"
+                        }, 5, 4);
+
+                        switch (opcaoExcluir)
+                        {
+                            case "1": DeletarLeitor(manager, tela); break;
+                            case "2": DeletarLivro(manager, tela); break;
+                            case "3": DeletarClube(manager, tela); break;
+                            case "4": DeletarEncontro(manager, tela); break;
+                        }
                         break;
                 }
 
-                tela.centralizar("Pressione qualquer tecla para continuar...", 24);
-                Console.ReadKey();
+                if (opcaoPrincipal != "5")
+                {
+                    tela.centralizar("Pressione qualquer tecla para continuar...", 24);
+                    Console.ReadKey();
+                    tela.limparArea(2, 3, 78, 22);
+                }
             }
         }
 
@@ -251,7 +292,7 @@
             {
                 foreach (var leitor in leitores)
                 {
-                    if (linhaAtual >= linFim - 8) break; // Deixa espaço para os clubes
+                    if (linhaAtual >= linFim - 8) break; 
                     Console.SetCursorPosition(col + 2, linhaAtual++);
                     Console.Write($"ID: {leitor.Id} | Nome: {leitor.Nome}");
                 }
@@ -298,7 +339,7 @@
                     Console.SetCursorPosition(col + 4, linhaAtual++);
                     Console.Write("Membros: Nenhum membro inscrito.");
                 }
-                linhaAtual++; // Espaço entre clubes
+                linhaAtual++; 
             }
         }
 
@@ -368,7 +409,7 @@
             }
             Console.SetCursorPosition(col + 2, linhaAtual - 1);
             Console.Write("--- Leitores Disponíveis ---");
-            foreach (var leitor in manager.ObterLeitores().Take(5)) // Limita para não poluir a tela
+            foreach (var leitor in manager.ObterLeitores().Take(5))
             {
                 Console.SetCursorPosition(col + 2, linhaAtual++);
                 Console.Write($"ID: {leitor.Id} | Nome: {leitor.Nome}");
@@ -415,78 +456,92 @@
                     Console.SetCursorPosition(col + 4, linhaAtual++);
                     Console.Write("Sem membros inscritos");
                 }
-                linhaAtual++; // Espaço entre clubes
+                linhaAtual++;
             }
         }
 
-    private static void ListarEncontrosUI(BookVerseManager manager, Tela tela)
-    {
-        int col = 5, lin = 4, colFim = 75, linFim = 22;
-        tela.desenharMoldura(col, lin, colFim, linFim);
-        tela.centralizar("Lista de Encontros", lin + 1, col, colFim);
-
-        int linhaAtual = lin + 3;
-
-        var encontros = manager.ObterEncontros();
-        if (!encontros.Any())
+        private static void ListarEncontrosUI(BookVerseManager manager, Tela tela)
         {
-            Console.SetCursorPosition(col + 2, linhaAtual);
-            Console.Write("Nenhum encontro cadastrado.");
-            return;
-        }
+            int col = 5, lin = 4, colFim = 75, linFim = 22;
+            tela.desenharMoldura(col, lin, colFim, linFim);
+            tela.centralizar("Lista de Encontros", lin + 1, col, colFim);
 
-        Console.SetCursorPosition(col + 2, linhaAtual++);
-        Console.Write("=== ENCONTROS DISPONÍVEIS ===");
-        linhaAtual++;
+            int linhaAtual = lin + 3;
 
-        foreach (var encontro in encontros.Take(5))
-        {
-            if (linhaAtual >= linFim - 2) break;
+            var encontros = manager.ObterEncontros();
+            if (!encontros.Any())
+            {
+                Console.SetCursorPosition(col + 2, linhaAtual);
+                Console.Write("Nenhum encontro cadastrado.");
+                return;
+            }
 
             Console.SetCursorPosition(col + 2, linhaAtual++);
-            Console.Write($"ID: {encontro.Id} | Tema: {encontro.Tema} | Data: {encontro.Data} | Status: {encontro.Status}");
+            Console.Write("=== ENCONTROS DISPONÍVEIS ===");
+            linhaAtual++;
+
+            foreach (var encontro in encontros.Take(5))
+            {
+                if (linhaAtual >= linFim - 2) break;
+
+                Console.SetCursorPosition(col + 2, linhaAtual++);
+                Console.Write($"ID: {encontro.Id} | Tema: {encontro.Tema} | Data: {encontro.Data} | Status: {encontro.Status}");
+            }
         }
-    }
 
         private static void ListarLivros(BookVerseManager manager, Tela tela)
         {
             int col = 5, lin = 4, colFim = 75, linFim = 22;
-            tela.desenharMoldura(col, lin, colFim, linFim);
-            tela.centralizar("Catálogo Geral", lin + 1, col, colFim);
+            int itensPorPagina = 5;
+            var livros = manager.ObterLivros().ToList();
+            var autores = manager.ObterAutores().ToList();
+            var generos = manager.ObterGeneros().ToList();
 
-            int linhaAtual = lin + 3;
+            int totalPaginas = (int)Math.Ceiling(livros.Count / (double)itensPorPagina);
+            int paginaAtual = 1;
 
-            Console.SetCursorPosition(col + 2, linhaAtual++);
-            Console.Write("--- LIVROS ---");
-            foreach (var livro in manager.ObterLivros())
+            while (true)
             {
-                if (linhaAtual > 12) break;
-                Console.SetCursorPosition(col + 2, linhaAtual++);
-                string nomeAutor = manager.ObterAutorPorId(livro.AutorId)?.Nome ?? "N/A";
-                string nomeGenero = manager.ObterGeneroPorId(livro.GeneroId)?.Nome ?? "N/A";
-                Console.Write($"ID: {livro.Id} | Título: {livro.Titulo} | Autor: {nomeAutor} | Gênero: {nomeGenero}");
-            }
+                tela.limparArea(col, lin, colFim, linFim);
+                tela.desenharMoldura(col, lin, colFim, linFim);
+                tela.centralizar($"Catálogo Geral - Página {paginaAtual}/{totalPaginas}", lin + 1, col, colFim);
 
-            linhaAtual = 14;
-            Console.SetCursorPosition(col + 2, linhaAtual++);
-            Console.Write("--- AUTORES ---");
-            foreach (var autor in manager.ObterAutores())
-            {
-                if (linhaAtual > 18) break;
-                Console.SetCursorPosition(col + 2, linhaAtual++);
-                Console.Write($"ID: {autor.Id} | Nome: {autor.Nome}");
-            }
+                int linhaAtual = lin + 3;
 
-            linhaAtual = 20;
-            Console.SetCursorPosition(col + 2, linhaAtual++);
-            Console.Write("--- GÊNEROS ---");
-            foreach (var genero in manager.ObterGeneros())
-            {
-                if (linhaAtual > linFim - 1) break;
                 Console.SetCursorPosition(col + 2, linhaAtual++);
-                Console.Write($"ID: {genero.Id} | Nome: {genero.Nome}");
+                Console.Write("--- LIVROS ---");
+
+                var livrosPagina = livros.Skip((paginaAtual - 1) * itensPorPagina).Take(itensPorPagina);
+                foreach (var livro in livrosPagina)
+                {
+                    if (linhaAtual >= linFim - 8) break;
+
+                    Console.SetCursorPosition(col + 2, linhaAtual++);
+                    string nomeAutor = autores.FirstOrDefault(a => a.Id == livro.AutorId)?.Nome ?? "N/A";
+                    string nomeGenero = generos.FirstOrDefault(g => g.Id == livro.GeneroId)?.Nome ?? "N/A";
+                    Console.Write($"ID: {livro.Id} | Título: {livro.Titulo} | Autor: {nomeAutor} | Gênero: {nomeGenero}");
+                }
+
+                // Exibe instruções de navegação
+                Console.SetCursorPosition(col + 2, linFim - 4);
+                Console.Write("N = Próxima | P = Anterior | S = Sair");
+
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.N && paginaAtual < totalPaginas)
+                {
+                    paginaAtual++;
+                }
+                else if (key == ConsoleKey.P && paginaAtual > 1)
+                {
+                    paginaAtual--;
+                }
+                else if (key == ConsoleKey.S)
+                {
+                    break;
+                }
             }
         }
+
         private static void EditarLeitorUI(BookVerseManager manager, Tela tela)
         {
             DesenharFormulario(tela, "Editar Perfil do Leitor", 15, out int col, out int lin);
